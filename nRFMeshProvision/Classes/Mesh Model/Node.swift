@@ -443,7 +443,8 @@ public class Node: Codable {
             self.minimumNumberOfReplayProtectionList = crpl
         }
         self.features = try container.decodeIfPresent(NodeFeaturesState.self, forKey: .features)
-        self.secureNetworkBeacon = try container.decodeIfPresent(Bool.self, forKey: .secureNetworkBeacon)
+        let snbInt = try container.decodeIfPresent(Int.self, forKey: .secureNetworkBeacon)
+        self.secureNetworkBeacon = snbInt != nil ? snbInt! > 0 : nil
         let ttl = try container.decodeIfPresent(UInt8.self, forKey: .ttl)
         guard ttl == nil || ttl! <= 127 else {
             throw DecodingError.dataCorruptedError(forKey: .ttl, in: container,
@@ -483,7 +484,8 @@ public class Node: Codable {
         try container.encodeIfPresent(versionIdentifier?.hex, forKey: .versionIdentifier)
         try container.encodeIfPresent(minimumNumberOfReplayProtectionList?.hex, forKey: .minimumNumberOfReplayProtectionList)
         try container.encodeIfPresent(features, forKey: .features)
-        try container.encodeIfPresent(secureNetworkBeacon, forKey: .secureNetworkBeacon)
+        let snbInt = secureNetworkBeacon == nil ? nil : (secureNetworkBeacon! ? 1 : 0)
+        try container.encodeIfPresent(snbInt, forKey: .secureNetworkBeacon)
         try container.encodeIfPresent(ttl, forKey: .ttl)
         try container.encodeIfPresent(networkTransmit, forKey: .networkTransmit)
         try container.encodeIfPresent(relayRetransmit, forKey: .relayRetransmit)

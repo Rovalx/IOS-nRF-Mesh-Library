@@ -60,7 +60,7 @@ private struct TestStorage: Storage {
                             "version": "1.0.0",
                             "nodes": [
                                 {
-                                    "secureNetworkBeacon": false,
+                                    "secureNetworkBeacon": 0,
                                     "features": {
                                         "proxy": 2,
                                         "friend": 2,
