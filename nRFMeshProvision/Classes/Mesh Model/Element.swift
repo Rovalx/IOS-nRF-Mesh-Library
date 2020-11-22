@@ -55,9 +55,6 @@ public class Element: Codable {
     /// - parameter models:   Array of models belonging to this Element.
     ///                       It must contain at least one Model.
     public init(name: String? = nil, location: Location = .unknown, models: [Model]) {
-        guard !models.isEmpty else {
-            fatalError("An element must contain at least one model.")
-        }
         self.name     = name
         self.location = location
         self.models   = models

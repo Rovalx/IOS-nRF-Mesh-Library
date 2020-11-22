@@ -203,12 +203,12 @@ public struct Publish: Codable {
             throw DecodingError.dataCorruptedError(forKey: .retransmit, in: container,
                                                    debugDescription: "Retransmit count must be in range 0-7.")
         }
-        guard retransmit.interval >= 50 &&
-              retransmit.interval <= 1600 &&
-            (retransmit.interval % 50) == 0 else {
-            throw DecodingError.dataCorruptedError(forKey: .retransmit, in: container,
-                                                   debugDescription: "Retransmit interval must be in range 50-1600 ms in 50 ms steps.")
-        }
+//        guard retransmit.interval >= 50 &&
+//              retransmit.interval <= 1600 &&
+//            (retransmit.interval % 50) == 0 else {
+//            throw DecodingError.dataCorruptedError(forKey: .retransmit, in: container,
+//                                                   debugDescription: "Retransmit interval must be in range 50-1600 ms in 50 ms steps.")
+//        }
     }
 }
 

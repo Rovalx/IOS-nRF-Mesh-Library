@@ -138,10 +138,10 @@ public class Model: Codable {
                 throw DecodingError.dataCorruptedError(forKey: .subscribe, in: container,
                                                        debugDescription: "Address must be 4-character hexadecimal string or UUID.")
             }
-            guard meshAddress.address.isGroup || meshAddress.address.isVirtual else {
-                throw DecodingError.dataCorruptedError(forKey: .subscribe, in: container,
-                                                       debugDescription: "Address must be of group or virtual type.")
-            }
+//            guard meshAddress.address.isGroup || meshAddress.address.isVirtual else {
+//                throw DecodingError.dataCorruptedError(forKey: .subscribe, in: container,
+//                                                       debugDescription: "Address must be of group or virtual type.")
+//            }
         }
         if let publish = try container.decodeIfPresent(Publish.self, forKey: .publish) {
             self.publish = publish
@@ -169,7 +169,7 @@ public class Model: Codable {
     }
 }
 
-internal extension UInt16 {
+public extension UInt16 {
     
     static let configurationServerModelId: UInt16 = 0x0000
     static let configurationClientModelId: UInt16 = 0x0001
@@ -179,9 +179,23 @@ internal extension UInt16 {
     static let sceneSetupServerModelId: UInt16 = 0x1204
     static let sceneClientModelId: UInt16 = 0x1205
     
+    static let genericOnOffServerModelId: UInt16 = 0x1000
+    static let genericOnOffClientModelId: UInt16 = 0x1001
+    static let genericLevelServerModelId: UInt16 = 0x1002
+    static let genericLevelClientModelId: UInt16 = 0x1003
+    
+    static let lightLightnessClientModelId: UInt16 = 0x1302
+    static let lightHslClientModelId: UInt16 = 0x1309
+    
+    static let genericDefaultTransitionTimeServerModelid: UInt16 = 0x1004
+    static let genericDefaultTransitionTimeClientModelid: UInt16 = 0x1005
+    
+    // Supported vendor models
+    static let simpleOnOffModelId: UInt16 = 0x0001
+    static let nordicSemiconductorCompanyId: UInt16 = 0x0059
 }
 
-internal extension Model {
+public extension Model {
     
     var isConfigurationServer: Bool { return modelId == UInt32(UInt16.configurationServerModelId) }
     var isConfigurationClient: Bool { return modelId == UInt32(UInt16.configurationClientModelId) }

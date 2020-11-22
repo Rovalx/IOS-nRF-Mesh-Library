@@ -49,6 +49,16 @@ public struct LightHSLHueSetUnacknowledged: GenericMessage, TransactionMessage, 
     public let transitionTime: TransitionTime?
     public let delay: UInt8?
     
+    /// Creates  the Light HSL Hue Set  Unacknowledged message.
+    /// The value provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter scaledHue: The target hue value of the Light HSL Hue Actual state, in range od <0, 100>.
+    public init(scaledHue: Int) {
+        self.init(
+            hue: UInt16(scaledHue * 65535 / 100)
+        )
+    }
+    
     /// Creates the Light HSL Hue Set Unacknowledged message.
     ///
     /// Hue is representing by 16-bit unasigned integer of a 0-360 degree scale

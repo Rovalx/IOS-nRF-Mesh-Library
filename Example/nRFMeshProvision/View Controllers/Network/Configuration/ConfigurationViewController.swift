@@ -453,7 +453,7 @@ private extension ConfigurationViewController {
     func removeNode() {
         MeshNetworkManager.instance.meshNetwork!.remove(node: node)
         
-        if MeshNetworkManager.instance.save() {
+        if MeshNetworkManager.instance.def () {
             navigationController!.popViewController(animated: true)
         } else {
             presentAlert(title: "Error", message: "Mesh configuration could not be saved.")

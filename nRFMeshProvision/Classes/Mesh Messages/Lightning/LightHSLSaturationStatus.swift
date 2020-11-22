@@ -49,6 +49,11 @@ public struct LightHSLSaturationStatus: GenericMessage, TransitionStatusMessage 
     
     public let remainingTime: TransitionTime?
     
+    /// Returns `saturation` value in range of <1, 100>
+    public var scaledSaturation: Int {
+        return Int(saturation / (65535/100))
+    }
+    
     /// Creates the Light HSL Saturation Status message.
     ///
     /// The values for the Saturation state are defined in the following table:

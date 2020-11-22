@@ -50,6 +50,15 @@ public struct GenericLevelSet: AcknowledgedGenericMessage, TransactionMessage, T
     public let transitionTime: TransitionTime?
     public let delay: UInt8?
     
+    /// Creates theGeneric Level Set  message.
+    ///
+    /// The values provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter scaledLevel: The target value of the Generic Level Actual state, in range od <0, 100>.
+    public init(scaledLevel: Int) {
+        self.init(level: Int16(scaledLevel * 65535 / 100 - 32768))
+    }
+    
     /// Creates the Generic Level Set message.
     ///
     /// - parameter level: The target value of the Generic Level state.

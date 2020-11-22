@@ -46,6 +46,10 @@ public struct GenericLevelStatus: GenericMessage, TransitionStatusMessage {
     public let level: Int16
     /// The target value of the Generic Level state.
     public let targetLevel: Int16?
+    /// Returns `level` value in range of <0, 100>
+    public var scaledLevel: Int {
+        return ((Int(level) + 32768) / (65535 / 100))
+    }
     
     public let remainingTime: TransitionTime?
     

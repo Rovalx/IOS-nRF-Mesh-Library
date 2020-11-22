@@ -51,6 +51,15 @@ public struct GenericLevelSetUnacknowledged: GenericMessage, TransactionMessage,
     
     /// Creates the Generic Level Set Unacknowledged message.
     ///
+    /// The values provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter level: The target value of the Generic Level Actual state, in range od <0, 100>.
+    public init(scaledLevel: Int) {
+        self.init(level: Int16(scaledLevel * 65535 / 100 - 32768))
+    }
+    
+    /// Creates the Generic Level Set Unacknowledged message.
+    ///
     /// - parameter level: The target value of the Generic Level state.
     public init(level: Int16) {
         self.level = level

@@ -50,6 +50,16 @@ public struct LightHSLSaturationSet: AcknowledgedGenericMessage, TransactionMess
     public let transitionTime: TransitionTime?
     public let delay: UInt8?
     
+    /// Creates  the Light HSL Saturation Set  message.
+    /// The value provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter scaledSaturation: The target saturation value of the Light HSL Saturation Actual state, in range od <0, 100>.
+    public init(scaledSaturation: Int) {
+        self.init(
+            saturation: UInt16(scaledSaturation * 65535 / 100)
+        )
+    }
+    
     /// Creates the Light HSL Saturation Set message.
     ///
     /// The values for the Saturation state are defined in the following table:

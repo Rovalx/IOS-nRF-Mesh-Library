@@ -58,6 +58,19 @@ public struct LightHSLSet: AcknowledgedGenericMessage, TransactionMessage, Trans
     public let transitionTime: TransitionTime?
     public let delay: UInt8?
     
+    /// Creates  the Light HSL Set  message.
+    /// It only takes hue value as parameter.
+    /// The value provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter hue: The target hue value of the Light HSL Actual state, in range od <0, 100>.
+    public init(scaledHue: Int) {
+        self.init(
+            lightness: UInt16.max / 2,
+            hue: UInt16(scaledHue * 65535 / 100),
+            saturation: UInt16.max
+        )
+    }
+    
     /// Creates the Light HSL Set message.
     ///
     /// The values for the Lightness state are defined in the following table:

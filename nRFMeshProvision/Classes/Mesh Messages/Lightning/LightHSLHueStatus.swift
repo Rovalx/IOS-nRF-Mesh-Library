@@ -49,6 +49,11 @@ public struct LightHSLHueStatus: GenericMessage, TransitionStatusMessage {
     
     public let remainingTime: TransitionTime?
     
+    /// Returns `hue` value in range of <1, 100>
+    public var scaledHue: Int {
+        return Int(hue / (65535/100))
+    }
+    
     /// Creates the Light HSL Hue Status message.
     ///
     /// Hue is representing by 16-bit unasigned integer of a 0-360 degree scale

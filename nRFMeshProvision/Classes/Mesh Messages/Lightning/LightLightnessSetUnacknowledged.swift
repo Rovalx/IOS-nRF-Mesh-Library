@@ -70,6 +70,15 @@ public struct LightLightnessSetUnacknowledged: GenericMessage, TransactionMessag
     
     /// Creates the Light Lightness Set Unacknowledged message.
     ///
+    /// The values provied must be between range <0, 100> and will automatically passed into UInt16 constructor.
+    ///
+    /// - parameter lightness: The target value of the Light Lightness Actual state, in range od <0, 100>.
+    public init(scaledLightness: Int) {
+        self.init(lightness: UInt16(scaledLightness * 65535 / 100))
+    }
+    
+    /// Creates the Light Lightness Set Unacknowledged message.
+    ///
     /// The values for the state are defined in the following table:
     /// - 0x0000 - light is not emitted by the element.
     /// - 0x0001 - 0xFFFE - The light lightness of a light emitted by the element.

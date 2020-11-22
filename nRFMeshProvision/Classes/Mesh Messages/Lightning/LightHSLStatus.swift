@@ -55,6 +55,11 @@ public struct LightHSLStatus: GenericMessage, TransitionStatusMessage {
     
     public let remainingTime: TransitionTime?
     
+    /// Returns `hue` value in range of <1, 100>
+    public var scaledHue: Int {
+        return Int(hue / (65535/100))
+    }
+    
     /// Creates the Light HSL Status message.
     ///
     /// The values for the Lightness state are defined in the following table:
