@@ -31,6 +31,62 @@
 import Foundation
 import Security
 
+
+/// Enum representing each step provisioner may
+/// perform when provisioning new devince.
+public enum ProvisioningProcess {
+    enum Direction {
+        case incoming, outgoing
+    }
+    
+    case invite
+    case capabilities
+    case start
+    case publicKeySent
+    case publicKeyReceived
+    case authenticationStaticOobWaiting
+    case authenticationOutputOobWaiting
+    case authenticationInputOobWaiting
+    case authenticationInputEntered
+    case inputComplete
+    case confirmationSent
+    case confirmationReceived
+    case randomSent
+    case randomReceived
+    case dataSent
+    case complete
+    case failed
+    case compositionDataGetSent
+    case compositionDataStatusReceived
+    case sendingDefaultTtlGet
+    case defaultTtlStatusReceived
+    case sendingAppKeyAdd
+    case appKeyStatusReceived
+    case sendingNetworkTransmitSet
+    case sendingNetworkTransmitStatusReceived
+    case sendingBlockAcknowledgement
+    case blockAcknowledgememntReceived
+    case provisionerUnassigned
+    
+    var direction: Direction {
+        switch self {
+        case .capabilities,
+             .publicKeyReceived,
+             .inputComplete,
+             .confirmationReceived,
+             .randomReceived,
+             .complete,
+             .compositionDataStatusReceived,
+             .sendingNetworkTransmitStatusReceived,
+             .appKeyStatusReceived,
+             .defaultTtlStatusReceived,
+             .blockAcknowledgememntReceived:
+            return .incoming
+        default: return .outgoing
+        }
+    }
+}
+
 public protocol ProvisioningDelegate: class {
     
     /// Callback called when an authentication action is required
@@ -49,6 +105,10 @@ public protocol ProvisioningDelegate: class {
     /// - parameter state:               The completed provisioning state.
     func provisioningState(of unprovisionedDevice: UnprovisionedDevice, didChangeTo state: ProvisionigState)
     
+    
+    /// Callback called in order to track provisioning process step by step.
+    /// - Parameter step: The current step of provisioning process.
+    func provisioningProcess(didChangeTo step: ProvisioningProcess)
 }
 
 public class ProvisioningManager {
@@ -100,6 +160,7 @@ public class ProvisioningManager {
     public private(set) var state: ProvisionigState = .ready {
         didSet {
             if case .fail = state {
+                delegate?.provisioningProcess(didChangeTo: .failed)
                 logger?.e(.provisioning, "\(state)")
             } else {
                 logger?.i(.provisioning, "\(state)")
@@ -195,6 +256,8 @@ public class ProvisioningManager {
         let provisioningInvite = ProvisioningRequest.invite(attentionTimer: attentionTimer)
         logger?.v(.provisioning, "Sending \(provisioningInvite)")
         try send(provisioningInvite, andAccumulateTo: provisioningData)
+        
+        delegate?.provisioningProcess(didChangeTo: .invite)
     }
     
     /// This method starts the provisioning of the device.
@@ -262,11 +325,13 @@ public class ProvisioningManager {
         logger?.v(.provisioning, "Sending \(provisioningStart)")
         try send(provisioningStart, andAccumulateTo: provisioningData)
         self.authenticationMethod = authenticationMethod
+        delegate?.provisioningProcess(didChangeTo: .start)
         
         // Send the Public Key of the Provisioner.
         let provisioningPublicKey = ProvisioningRequest.publicKey(provisioningData.provisionerPublicKey)
         logger?.v(.provisioning, "Sending \(provisioningPublicKey)")
         try send(provisioningPublicKey, andAccumulateTo: provisioningData)
+        delegate?.provisioningProcess(didChangeTo: .publicKeySent)
         
         // If the device's Public Key was obtained OOB, we are now ready to
         // authenticate.
@@ -337,6 +402,8 @@ extension ProvisioningManager: BearerDelegate, BearerDataDelegate {
             
         // Provisioning Capabilities have been received.
         case (.requestingCapabilities, .capabilities):
+            delegate?.provisioningProcess(didChangeTo: .capabilities)
+            
             let capabilities = response.capabilities!
             provisioningCapabilities = capabilities
             provisioningData.accumulate(pdu: data.dropFirst())
@@ -355,6 +422,8 @@ extension ProvisioningManager: BearerDelegate, BearerDataDelegate {
             
         // Device Public Key has been received.
         case (.provisioning, .publicKey):
+            delegate?.provisioningProcess(didChangeTo: .publicKeyReceived)
+            
             let publicKey = response.publicKey!
             provisioningData.accumulate(pdu: data.dropFirst())
             do {
@@ -366,6 +435,7 @@ extension ProvisioningManager: BearerDelegate, BearerDataDelegate {
             
         // The user has performed the Input Action on the device.
         case (.provisioning, .inputComplete):
+            delegate?.provisioningProcess(didChangeTo: .inputComplete)
             delegate?.inputComplete()
             switch authAction! {
             case let .displayNumber(value, inputAction: _):
@@ -383,29 +453,38 @@ extension ProvisioningManager: BearerDelegate, BearerDataDelegate {
         
         // The Provisioning Confirmation value has been received.
         case (.provisioning, .confirmation):
+            delegate?.provisioningProcess(didChangeTo: .confirmationReceived)
+            
             provisioningData.provisionerDidObtain(deviceConfirmation: response.confirmation!)
             do {
                 let provisioningRandom = ProvisioningRequest.random(provisioningData.provisionerRandom)
                 logger?.v(.provisioning, "Sending \(provisioningRandom)")
                 try send(provisioningRandom)
+                delegate?.provisioningProcess(didChangeTo: .randomSent)
+                
             } catch {
                 state = .fail(error)
             }
             
         // The device Random value has been received. We may now authenticate the device.
         case (.provisioning, .random):
+            delegate?.provisioningProcess(didChangeTo: .randomReceived)
+            
             provisioningData.provisionerDidObtain(deviceRandom: response.random!)
             do {
                 try provisioningData.validateConfirmation()
                 let encryptedData = ProvisioningRequest.data(provisioningData.encryptedProvisioningDataWithMic)
                 logger?.v(.provisioning, "Sending \(encryptedData)")
                 try send(encryptedData)
+                delegate?.provisioningProcess(didChangeTo: .dataSent)
             } catch {
                 state = .fail(error)
             }
             
         // The provisioning process is complete.
         case (.provisioning, .complete):
+            delegate?.provisioningProcess(didChangeTo: .complete)
+            
             let deviceKey = provisioningData.deviceKey!
             let n = provisioningCapabilities!.numberOfElements
             let node = Node(for: unprovisionedDevice, with: n, elementsDeviceKey: deviceKey,
@@ -413,6 +492,7 @@ extension ProvisioningManager: BearerDelegate, BearerDataDelegate {
                             andAddress: provisioningData.unicastAddress)
             do {
                 try meshNetwork.add(node: node)
+                delegate?.provisioningProcess(didChangeTo: .complete)
                 state = .complete
             } catch {
                 state = .fail(error)
@@ -524,6 +604,7 @@ private extension ProvisioningManager {
             let provisioningConfirmation = ProvisioningRequest.confirmation(provisioningData.provisionerConfirmation)
             logger?.v(.provisioning, "Sending \(provisioningConfirmation)")
             try send(provisioningConfirmation)
+            delegate?.provisioningProcess(didChangeTo: .confirmationSent)
         } catch {
             state = .fail(error)
         }

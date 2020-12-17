@@ -108,12 +108,17 @@ public extension MeshNetwork {
                                      for elementsCount: UInt8,
                                      elementsUsing provisioner: Provisioner) -> Address? {
         let sortedNodes = nodes.sorted { $0.unicastAddress < $1.unicastAddress }
+        let defaults = UserDefaults(suiteName: uuid.uuidString)
+        let nextFreeAddress = defaults?.integer(forKey: "nextFreeAddress")
         
         // Iterate through all nodes just once, while iterating over ranges.
         var index = 0
         for range in provisioner.allocatedUnicastRange {
             // Start from the beginning of the current range.
             var address = range.lowAddress
+            if nextFreeAddress != nil, address < nextFreeAddress! {
+                address = Address(nextFreeAddress!)
+            }
             
             if range.contains(offset) && address < offset {
                 address = offset
@@ -148,7 +153,17 @@ public extension MeshNetwork {
             }
         }
         // No address was found :(
-        return nil
+        
+        // Assign new range
+        guard let range = nextAvailableUnicastAddressRange(ofSize: 0x64) else {
+            return nil
+        }
+        
+        try? provisioner.allocateUnicastAddressRange(range)
+        return nextAvailableUnicastAddress(
+            startingFrom: offset,
+            for: elementsCount,
+            elementsUsing: provisioner)
     }
     
     /// Returns the next available Unicast Address from the Provisioner's range

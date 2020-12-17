@@ -150,6 +150,10 @@ public extension MeshNetwork {
         }
         remove(nodeWithUuid: node.uuid)
         
+        // Save last used address
+        let defaults = UserDefaults(suiteName: uuid.uuidString)
+        defaults?.setValue(node.lastUnicastAddress + 1, forKey: "nextFreeAddress")
+        
         node.meshNetwork = self
         nodes.append(node)
         timestamp = Date()

@@ -58,7 +58,7 @@ public class Node: Codable {
     /// layer messages originating from a mesh node.
     public struct NetworkTransmit: Codable {
         /// Number of transmissions for network messages.
-        /// The value is in range from 1 to 8.
+        /// The value is in range from 0 to 7.
         public let count: UInt8
         /// The interval (in milliseconds) between retransmissions
         /// (from 10 to 320 ms in 10 ms steps).
@@ -73,12 +73,12 @@ public class Node: Codable {
         }
         
         internal init(_ request: ConfigNetworkTransmitSet) {
-            self.count = request.count + 1
+            self.count = request.count
             self.interval = UInt16(request.steps + 1) * 10
         }
         
         internal init(_ status: ConfigNetworkTransmitStatus) {
-            self.count = status.count + 1
+            self.count = status.count
             self.interval = UInt16(status.steps + 1) * 10
         }
     }

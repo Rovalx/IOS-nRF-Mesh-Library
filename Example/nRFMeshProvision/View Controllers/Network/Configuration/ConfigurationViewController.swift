@@ -82,9 +82,10 @@ class ConfigurationViewController: ProgressViewController {
         if !node.isCompositionDataReceived {
             // This will request Composition Data when the bearer is open.
             getCompositionData()
-        } else if node.defaultTTL == nil {
-            getTtl()
         }
+//        } else if node.defaultTTL == nil {
+//            getTtl()
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -453,7 +454,7 @@ private extension ConfigurationViewController {
     func removeNode() {
         MeshNetworkManager.instance.meshNetwork!.remove(node: node)
         
-        if MeshNetworkManager.instance.def () {
+        if MeshNetworkManager.instance.save() {
             navigationController!.popViewController(animated: true)
         } else {
             presentAlert(title: "Error", message: "Mesh configuration could not be saved.")
@@ -467,14 +468,14 @@ extension ConfigurationViewController: MeshNetworkDelegate {
     func meshNetworkManager(_ manager: MeshNetworkManager,
                             didReceiveMessage message: MeshMessage,
                             sentFrom source: Address, to destination: Address) {
-        // Has the Node been reset remotely.
-        guard !(message is ConfigNodeReset) else {
-            (UIApplication.shared.delegate as! AppDelegate).meshNetworkDidChange()
-            done() {
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-            return
-        }
+//        // Has the Node been reset remotely.
+//        guard !(message is ConfigNodeReset) else {
+//            (UIApplication.shared.delegate as! AppDelegate).meshNetworkDidChange()
+//            done() {
+//                self.navigationController?.popToRootViewController(animated: true)
+//            }
+//            return
+//        }
         // Is the message targeting the current Node?
         guard node.unicastAddress == source else {
             return

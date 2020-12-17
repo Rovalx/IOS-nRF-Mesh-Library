@@ -108,7 +108,7 @@ internal class AccessLayer {
     private let mutex = DispatchQueue(label: "AccessLayerMutex")
     
     private var logger: LoggerDelegate? {
-        return networkManager.manager.logger
+        return networkManager?.manager.logger
     }
     
     /// A map of current transactions.

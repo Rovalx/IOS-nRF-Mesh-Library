@@ -327,6 +327,10 @@ extension ProvisioningViewController: GattBearerDelegate {
 }
 
 extension ProvisioningViewController: ProvisioningDelegate {
+    func provisioningProcess(didChangeTo step: ProvisioningProcess) {
+        
+    }
+    
     
     func provisioningState(of unprovisionedDevice: UnprovisionedDevice, didChangeTo state: ProvisionigState) {
         DispatchQueue.main.async {
