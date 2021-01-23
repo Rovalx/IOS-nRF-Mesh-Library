@@ -54,7 +54,7 @@ public class Model: Codable {
     }
     /// The array of Group Addresses (4-character hexadecimal string),
     /// or Virtual Label UUIDs (32-character hexadecimal string).
-    internal private(set) var subscribe: [String]
+    public private(set) var subscribe: [String]
     /// Returns the list of known Groups that this Model is subscribed to.
     /// It may be that the Model is subscribed to some other Groups, which are
     /// not known to the local database, and those are not returned.

@@ -31,7 +31,7 @@
 import Foundation
 
 
-internal extension UInt8 {
+public extension UInt8 {
     
     init?(hex: String) {
         guard hex.count == 2, let value = UInt8(hex, radix: 16) else {

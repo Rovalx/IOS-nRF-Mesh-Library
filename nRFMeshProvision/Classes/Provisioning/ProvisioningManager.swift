@@ -35,7 +35,7 @@ import Security
 /// Enum representing each step provisioner may
 /// perform when provisioning new devince.
 public enum ProvisioningProcess {
-    enum Direction {
+    public enum Direction {
         case incoming, outgoing
     }
     

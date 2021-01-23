@@ -74,7 +74,7 @@ public struct MeshAddress {
     }
 }
 
-internal extension MeshAddress {
+public extension MeshAddress {
     
     var hex: String {
         if let virtualLabel = virtualLabel {

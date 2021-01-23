@@ -101,6 +101,7 @@
 		330E9D2117CF3866F4F7864679A7E1F7 /* GenericOnOffGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420867CCA79B0B87A7AFA8BAE85E2A05 /* GenericOnOffGet.swift */; };
 		352F2AAC588D69C2CDCD32E6E834FA3E /* MeshNetwork+Provisioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438BAACE142F3554AB28CA47CF1BB0 /* MeshNetwork+Provisioner.swift */; };
 		353DC922F00812175FE39BCB4F497949 /* LightHSLTargetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12045479F74544041FA3CA2F30CA80B2 /* LightHSLTargetStatus.swift */; };
+		36A8656F25BC7549002DBD63 /* HealthAttentionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8656E25BC7549002DBD63 /* HealthAttentionSet.swift */; };
 		36BEB0E77A06EB4356CF41059EAA74F1 /* LightLightnessRangeGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690647A8327F3756BA53019B3EB3C12 /* LightLightnessRangeGet.swift */; };
 		36E5BC2CC42B6C686F409EFF46555F80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		371AD05EC286AA0614E5FB1BFCC80A05 /* ConfigNetworkTransmitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C616047ED678DA44EEE3CEA2888859 /* ConfigNetworkTransmitSet.swift */; };
@@ -474,6 +475,7 @@
 		3530FF80C676EBE031E7A065EE6FC512 /* ConfigModelSubscriptionVirtualAddressDelete.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigModelSubscriptionVirtualAddressDelete.swift; sourceTree = "<group>"; };
 		365DB2FD709DBE3B85E9D0C4F4655998 /* rand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rand.h; path = ios/include/openssl/rand.h; sourceTree = "<group>"; };
 		36917E6A31C54EAF6E3F0D5CCAC86693 /* Element+Address.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Element+Address.swift"; sourceTree = "<group>"; };
+		36A8656E25BC7549002DBD63 /* HealthAttentionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthAttentionSet.swift; sourceTree = "<group>"; };
 		37EC3959BB5B469DDCDA0A082014E1F5 /* LightLightnessGet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LightLightnessGet.swift; sourceTree = "<group>"; };
 		38E44CFDD30E8196AB182620090077A7 /* asn1t.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1t.h; path = ios/include/openssl/asn1t.h; sourceTree = "<group>"; };
 		39D5550D1FE961D228BF66813367C2ED /* opensslconf-x86_64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "opensslconf-x86_64.h"; path = "ios/include/openssl/opensslconf-x86_64.h"; sourceTree = "<group>"; };
@@ -1149,6 +1151,7 @@
 		5BF05DD913E81FE35C8A4DD9E9A9874F /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				36A8656E25BC7549002DBD63 /* HealthAttentionSet.swift */,
 				2683208636F110E10C952B38325F5F04 /* Configuration */,
 			);
 			path = Foundation;
@@ -1924,6 +1927,7 @@
 				8669D4BBF0753171A37E2C7758CFEA4A /* LightLightnessLastGet.swift in Sources */,
 				5A584BC9C4D07D968A7F3AD5E2458C7E /* LightLightnessLastStatus.swift in Sources */,
 				6CA41DA27F9BF62DACABE90AD161F8E3 /* LightLightnessLinearGet.swift in Sources */,
+				36A8656F25BC7549002DBD63 /* HealthAttentionSet.swift in Sources */,
 				31FF98DDB3D75AD06DB0AB6BC1B9563E /* LightLightnessLinearSet.swift in Sources */,
 				CE836DC91083C380F67D40CD027960CB /* LightLightnessLinearSetUnacknowledged.swift in Sources */,
 				C10E04F0D082BE0F6CB1CB654BD86471 /* LightLightnessLinearStatus.swift in Sources */,
