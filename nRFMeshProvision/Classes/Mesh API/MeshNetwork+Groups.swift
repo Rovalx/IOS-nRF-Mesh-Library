@@ -55,6 +55,10 @@ public extension MeshNetwork {
         group.meshNetwork = self
         groups.append(group)
         timestamp = Date()
+        
+        // Save last used address
+        let defaults = UserDefaults(suiteName: uuid.uuidString)
+        defaults?.setValue(group.address.address + 1, forKey: "nextFreeGroupAddress")
     }
     
     /// Removes the given Group from the network.

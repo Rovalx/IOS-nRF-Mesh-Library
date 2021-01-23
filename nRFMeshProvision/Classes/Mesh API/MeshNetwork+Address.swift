@@ -109,6 +109,7 @@ public extension MeshNetwork {
                                      elementsUsing provisioner: Provisioner) -> Address? {
         let sortedNodes = nodes.sorted { $0.unicastAddress < $1.unicastAddress }
         let defaults = UserDefaults(suiteName: uuid.uuidString)
+//        defaults?.setValue(0x02, forKey: "nextFreeAddress")
         let nextFreeAddress = defaults?.integer(forKey: "nextFreeAddress")
         
         // Iterate through all nodes just once, while iterating over ranges.
@@ -191,9 +192,14 @@ public extension MeshNetwork {
         
         // Iterate through all groups just once, while iterating over ranges.
         var index = 0
+        let defaults = UserDefaults(suiteName: uuid.uuidString)
+        let nextFreeAddress = defaults?.integer(forKey: "nextFreeGroupAddress")
         for range in provisioner.allocatedGroupRange {
             // Start from the beginning of the current range.
             var address = range.lowAddress
+            if nextFreeAddress != nil, address < nextFreeAddress! {
+                address = Address(nextFreeAddress!)
+            }
             
             // Iterate through groups that weren't checked yet.
             let currentIndex = index
