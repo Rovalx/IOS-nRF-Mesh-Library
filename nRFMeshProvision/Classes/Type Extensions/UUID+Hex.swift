@@ -52,14 +52,18 @@ internal extension UUID {
         self.init(uuid: uuid.uuid)
     }
     
-    /// Returns the uuidString without dashes.
-    var hex: String {
-        return uuidString.replacingOccurrences(of: "-", with: "")
-    }
-    
     /// The UUID as Data.
     var data: Data {
         return withUnsafeBytes(of: uuid, { Data($0) })
+    }
+    
+}
+
+public extension UUID {
+    
+    /// Returns the uuidString without dashes.
+    var hex: String {
+        return uuidString.replacingOccurrences(of: "-", with: "")
     }
     
 }

@@ -30,8 +30,7 @@
 
 import Foundation
 
-
-public extension UInt8 {
+internal extension UInt8 {
     
     init?(hex: String) {
         guard hex.count == 2, let value = UInt8(hex, radix: 16) else {
@@ -40,9 +39,6 @@ public extension UInt8 {
         self = value
     }
     
-    var hex: String {
-        return String(format: "%02X", self)
-    }
     
     init(data: Data) {
         self = data[0]
@@ -54,6 +50,13 @@ public extension UInt8 {
     
 }
 
+public extension UInt8 {
+    
+    var hex: String {
+        return String(format: "%02X", self)
+    }
+}
+
 internal extension UInt16 {
     
     init?(hex: String) {
@@ -61,10 +64,6 @@ internal extension UInt16 {
             return nil
         }
         self = value
-    }
-    
-    var hex: String {
-        return String(format: "%04X", self)
     }
     
     init(data: Data) {
@@ -78,6 +77,12 @@ internal extension UInt16 {
     
 }
 
+public extension UInt16 {
+    var hex: String {
+        return String(format: "%04X", self)
+    }
+}
+
 internal extension UInt32 {
     
     init?(hex: String) {
@@ -87,12 +92,14 @@ internal extension UInt32 {
         self = value
     }
     
-    var hex: String {
-        return String(format: "%08X", self)
-    }
-    
     init(data: Data) {
         self = data.withUnsafeBytes { $0.load(as: UInt32.self) }
     }
     
+}
+
+public extension UInt32 {
+    var hex: String {
+        return String(format: "%08X", self)
+    }
 }

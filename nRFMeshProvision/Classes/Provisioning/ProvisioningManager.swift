@@ -68,7 +68,7 @@ public enum ProvisioningProcess {
     case blockAcknowledgememntReceived
     case provisionerUnassigned
     
-    var direction: Direction {
+    public var direction: Direction {
         switch self {
         case .capabilities,
              .publicKeyReceived,

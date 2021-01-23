@@ -308,7 +308,7 @@ public enum Location: UInt16, Codable {
     case upper                        = 0x0104
 }
 
-internal extension Location {
+public extension Location {
     
     var hex: String {
         return rawValue.hex
