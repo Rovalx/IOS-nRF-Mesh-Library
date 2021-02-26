@@ -30,7 +30,7 @@
 
 import Foundation
 
-public enum StepResolution: UInt8 {
+public enum StepResolution: UInt8, CaseIterable {
     case hundredsOfMilliseconds = 0b00
     case seconds                = 0b01
     case tensOfSeconds          = 0b10

@@ -343,13 +343,13 @@ internal class ConfigurationServerHandler: ModelDelegate {
             }
             var group = meshNetwork.group(withAddress: MeshAddress(request.address))
             if let group = group {
-                model.subscribe(to: group)
+                model.subscribe(to: group.address)
             } else {
                 do {
                     group = try Group(name: NSLocalizedString("New Group", comment: ""),
                                       address: request.address)
                     try meshNetwork.add(group: group!)
-                    model.subscribe(to: group!)
+                    model.subscribe(to: group!.address)
                 } catch {
                     return ConfigModelSubscriptionStatus(responseTo: request, with: .invalidAddress)
                 }
@@ -372,14 +372,14 @@ internal class ConfigurationServerHandler: ModelDelegate {
             var group = meshNetwork.group(withAddress: MeshAddress(request.address))
             if let group = group {
                 model.unsubscribeFromAll()
-                model.subscribe(to: group)
+                model.subscribe(to: group.address)
             } else {
                 do {
                     group = try Group(name: NSLocalizedString("New Group", comment: ""),
                                       address: request.address)
                     try meshNetwork.add(group: group!)
                     model.unsubscribeFromAll()
-                    model.subscribe(to: group!)
+                    model.subscribe(to: group!.address)
                 } catch {
                     return ConfigModelSubscriptionStatus(responseTo: request, with: .invalidAddress)
                 }
@@ -411,13 +411,13 @@ internal class ConfigurationServerHandler: ModelDelegate {
             }
             var group = meshNetwork.group(withAddress: MeshAddress(request.virtualLabel))
             if group != nil {
-                model.subscribe(to: group!)
+                model.subscribe(to: group!.address)
             } else {
                 do {
                     group = try Group(name: NSLocalizedString("New Group", comment: ""),
                                       address: MeshAddress(request.virtualLabel))
                     try meshNetwork.add(group: group!)
-                    model.subscribe(to: group!)
+                    model.subscribe(to: group!.address)
                 } catch {
                     return ConfigModelSubscriptionStatus(responseTo: request, with: .invalidAddress)
                 }
@@ -437,14 +437,14 @@ internal class ConfigurationServerHandler: ModelDelegate {
             var group = meshNetwork.group(withAddress: MeshAddress(request.virtualLabel))
             if group != nil {
                 model.unsubscribeFromAll()
-                model.subscribe(to: group!)
+                model.subscribe(to: group!.address)
             } else {
                 do {
                     group = try Group(name: NSLocalizedString("New Group", comment: ""),
                                       address: MeshAddress(request.virtualLabel))
                     try meshNetwork.add(group: group!)
                     model.unsubscribeFromAll()
-                    model.subscribe(to: group!)
+                    model.subscribe(to: group!.address)
                 } catch {
                     return ConfigModelSubscriptionStatus(responseTo: request, with: .invalidAddress)
                 }
@@ -460,7 +460,7 @@ internal class ConfigurationServerHandler: ModelDelegate {
             }
             let address = MeshAddress(request.virtualLabel)
             if let group = meshNetwork.group(withAddress: address) {
-                model.unsubscribe(from: group)
+                model.unsubscribe(from: group.address)
             }
             return ConfigModelSubscriptionStatus(confirmDeleting: address.address, from: model)!
             

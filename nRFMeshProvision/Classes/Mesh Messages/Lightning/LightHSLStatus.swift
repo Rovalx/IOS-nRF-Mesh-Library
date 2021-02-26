@@ -32,7 +32,7 @@
  * Created by codepgq.
  */
 
-import Foundation
+import UIKit
 
 public struct LightHSLStatus: GenericMessage, TransitionStatusMessage {
     public static var opCode: UInt32 = 0x8278
@@ -55,9 +55,19 @@ public struct LightHSLStatus: GenericMessage, TransitionStatusMessage {
     
     public let remainingTime: TransitionTime?
     
-    /// Returns `hue` value in range of <1, 100>
-    public var scaledHue: Int {
-        return Int(hue / (65535/100))
+    /// Returns `hue` value in range of <0, 1>
+    public var scaledHue: CGFloat {
+        return CGFloat(hue) / 65535
+    }
+    
+    /// Returns `lightness` value in range of <0, 1>
+    public var scaledLightness: CGFloat {
+        return CGFloat(lightness) / CGFloat(UInt16.max)
+    }
+    
+    /// Returns `saturation` value in range of <0, 1>
+    public var scaledSaturation: CGFloat {
+        return CGFloat(saturation) / CGFloat(UInt16.max)
     }
     
     /// Creates the Light HSL Status message.

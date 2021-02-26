@@ -48,6 +48,16 @@ public struct ConfigModelSubscriptionAdd: AcknowledgedConfigMessage, ConfigAddre
     public let modelIdentifier: UInt16
     public let companyIdentifier: UInt16?
     
+    public init?(address: Address, to model: Model) {
+        guard let elementAddress = model.parentElement?.unicastAddress else {
+            return nil
+        }
+        self.address = address
+        self.elementAddress = elementAddress
+        self.modelIdentifier = model.modelIdentifier
+        self.companyIdentifier = model.companyIdentifier
+    }
+    
     public init?(group: Group, to model: Model) {
         guard group.address.address.isGroup else {
             // ConfigModelSubscriptionVirtualAddressAdd should be used instead.

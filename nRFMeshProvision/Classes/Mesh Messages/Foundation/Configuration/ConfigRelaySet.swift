@@ -62,6 +62,7 @@ public struct ConfigRelaySet: AcknowledgedConfigMessage {
     
     /// Enables and sets the Relay settings on the Node.
     ///
+    /// - parameter state: `true` if relay should be enabled, `false` otherwise
     /// - parameter count: Number of retransmissions on advertising bearer
     ///                    for each Network PDU relayed by the Node. Possible
     ///                    values are 0...7, which correspond to 1-8 transmissions
@@ -69,8 +70,8 @@ public struct ConfigRelaySet: AcknowledgedConfigMessage {
     /// - parameter steps: Number of 10-millisecond steps between retransmissions,
     ///                    decremented by 1. Possible values are 0...31, which
     ///                    corresponds to 10-320 milliseconds intervals.
-    public init(count: UInt8, steps: UInt8) {
-        self.state = .enabled
+    public init(state: Bool, count: UInt8, steps: UInt8) {
+        self.state = state ? .enabled : .notEnabled
         self.count = min(7, count)
         self.steps = min(31, steps)
     }

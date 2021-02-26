@@ -224,18 +224,14 @@ internal class ConfigurationClientHandler: ModelDelegate {
                     model.unsubscribeFromAll()
                     break
                 }
-                // Here it should be safe to search for the group.
-                guard let group = meshNetwork.group(withAddress: address) else {
-                    break
-                }
                 switch request {
                 case is ConfigModelSubscriptionOverwrite, is ConfigModelSubscriptionVirtualAddressOverwrite:
                     model.unsubscribeFromAll()
                     fallthrough
                 case is ConfigModelSubscriptionAdd, is ConfigModelSubscriptionVirtualAddressAdd:
-                    model.subscribe(to: group)
+                    model.subscribe(to: address)
                 case is ConfigModelSubscriptionDelete, is ConfigModelSubscriptionVirtualAddressDelete:
-                    model.unsubscribe(from: group)
+                    model.unsubscribe(from: address)
                 default:
                     break
                 }
@@ -249,14 +245,14 @@ internal class ConfigurationClientHandler: ModelDelegate {
                 model.unsubscribeFromAll()
                 for address in list.addresses {
                     if let group = meshNetwork.groups.first(where: { $0.address.address == address }) {
-                        model.subscribe(to: group)
+                        model.subscribe(to: group.address)
                     } else {
                         if address.isGroup && !address.isSpecialGroup {
                             do {
                                 let group = try Group(name: NSLocalizedString("New Group", comment: ""),
                                                       address: MeshAddress(address))
                                 try meshNetwork.add(group: group)
-                                model.subscribe(to: group)
+                                model.subscribe(to: group.address)
                             } catch {
                                 // This should never happen.
                                 continue

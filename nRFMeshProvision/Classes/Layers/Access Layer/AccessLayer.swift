@@ -401,7 +401,7 @@ private extension AccessLayer {
                                     _ = networkManager.manager.save()
                                 }
                             } else {
-                                let modelName = model.name ?? "model"
+                                let modelName = model.name
                                 let element = model.parentElement!
                                 logger?.w(.model, "Local \(modelName) model on \(element) not bound to key: \(keySet.applicationKey)")
                             }

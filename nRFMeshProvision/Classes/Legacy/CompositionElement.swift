@@ -75,7 +75,7 @@ internal struct CompositionElement: Codable {
                                                    retransmit: Publish.Retransmit()))
                 }
             }
-            groups(for: $0).forEach { group in model.subscribe(to: group )}
+            groups(for: $0).forEach { group in model.subscribe(to: group.address )}
             element.add(model: model)
         }
         vendorModels.forEach { element.add(model: Model(modelId: $0.asUInt32)) }

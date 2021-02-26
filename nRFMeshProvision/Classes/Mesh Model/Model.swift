@@ -55,6 +55,7 @@ public class Model: Codable {
     /// The array of Group Addresses (4-character hexadecimal string),
     /// or Virtual Label UUIDs (32-character hexadecimal string).
     public private(set) var subscribe: [String]
+    
     /// Returns the list of known Groups that this Model is subscribed to.
     /// It may be that the Model is subscribed to some other Groups, which are
     /// not known to the local database, and those are not returned.
@@ -267,22 +268,22 @@ internal extension Model {
         parentElement?.parentNode?.meshNetwork?.timestamp = Date()
     }
     
-    /// Adds the given Group to the list of subscriptions.
+    /// Adds the given Address to the list of subscriptions.
     ///
-    /// - parameter group: The new Group to be added.
-    func subscribe(to group: Group) {
-        let address = group.address.hex
+    /// - parameter address: The new MeshAddress to be added.
+    func subscribe(to address: MeshAddress) {
+        let address = address.hex
         if !subscribe.contains(address) {
             subscribe.append(address)
             parentElement?.parentNode?.meshNetwork?.timestamp = Date()
         }
     }
     
-    /// Removes the given Group from list of subscriptions.
+    /// Removes the given Address from list of subscriptions.
     ///
-    /// - parameter group: The Group to be removed.
-    func unsubscribe(from group: Group) {
-        let address = group.address.hex
+    /// - parameter group: The MeshAddress to be removed.
+    func unsubscribe(from address: MeshAddress) {
+        let address = address.hex
         if let index = subscribe.firstIndex(of: address) {
             subscribe.remove(at: index)
             parentElement?.parentNode?.meshNetwork?.timestamp = Date()

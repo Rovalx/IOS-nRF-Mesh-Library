@@ -32,7 +32,7 @@
  * Created by codepgq.
  */
 
-import Foundation
+import UIKit
 
 public struct LightHSLSetUnacknowledged: GenericMessage, TransactionMessage, TransitionMessage {
     public static var opCode: UInt32 = 0x8277
@@ -56,6 +56,21 @@ public struct LightHSLSetUnacknowledged: GenericMessage, TransactionMessage, Tra
     
     public let transitionTime: TransitionTime?
     public let delay: UInt8?
+    
+    /// Creates  the Light HSL Set  Unacknowledged message.
+    /// It only takes hue, saturation and lightness baram in range of <0, 1>
+    ///
+    /// - parameters:
+    ///   - lightness: The target value of the Light HSL Lightness state.
+    ///   - hue: The target value of the Light HSL Hue state.
+    ///   - saturation: The target value of the Light HSL Saturation state.
+    public init(lightness: CGFloat, hue: CGFloat, saturation: CGFloat) {
+        self.init(
+            lightness: UInt16(lightness * CGFloat(UInt16.max)),
+            hue: UInt16(hue * CGFloat(65535)),
+            saturation: UInt16(saturation * CGFloat(UInt16.max))
+        )
+    }
     
     /// Creates  the Light HSL Set Unacknowledged message.
     /// It only takes hue value as parameter.

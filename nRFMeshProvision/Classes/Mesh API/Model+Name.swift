@@ -33,7 +33,7 @@ import Foundation
 public extension Model {
     
     /// The Model name as defined in Bluetooth Mesh Model Specification.
-    var name: String? {
+    var name: String {
         if !isBluetoothSIGAssigned {
             return "Vendor Model"
         }
@@ -100,7 +100,7 @@ public extension Model {
         case 0x1310: return "Light LC Setup Server"
         case 0x1311: return "Light LC Client"
             
-        default: return nil
+        default: return "Unknown model"
         }
     }
     

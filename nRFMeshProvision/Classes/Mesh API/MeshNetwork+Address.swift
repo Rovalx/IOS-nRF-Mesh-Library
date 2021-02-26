@@ -193,6 +193,7 @@ public extension MeshNetwork {
         // Iterate through all groups just once, while iterating over ranges.
         var index = 0
         let defaults = UserDefaults(suiteName: uuid.uuidString)
+//        defaults?.setValue(0xc063, forKey: "nextFreeGroupAddress")
         let nextFreeAddress = defaults?.integer(forKey: "nextFreeGroupAddress")
         for range in provisioner.allocatedGroupRange {
             // Start from the beginning of the current range.
@@ -230,7 +231,13 @@ public extension MeshNetwork {
             }
         }
         // No address was found :(
-        return nil
+        
+        // Assign new range
+        guard let range = nextAvailableGroupAddressRange(ofSize: 0x64) else {
+            return nil
+        }
+        try? provisioner.allocateGroupAddressRange(range)
+        return nextAvailableUnicastAddress(for: provisioner)
     }
     
     /// Returns the next available Group Address from the local Provisioner's range

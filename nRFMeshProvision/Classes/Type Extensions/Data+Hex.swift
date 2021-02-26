@@ -55,7 +55,7 @@ public extension Data {
     }
     
     /// Hexadecimal string representation of `Data` object.
-    public var hex: String {
+    var hex: String {
         return map { String(format: "%02X", $0) }.joined()
     }
     
