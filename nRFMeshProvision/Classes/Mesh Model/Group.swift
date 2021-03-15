@@ -31,7 +31,7 @@
 import Foundation
 
 public class Group: Codable {
-    internal weak var meshNetwork: MeshNetwork?
+    public weak var meshNetwork: MeshNetwork?
     
     /// UTF-8 human-readable name of the Group.
     public var name: String

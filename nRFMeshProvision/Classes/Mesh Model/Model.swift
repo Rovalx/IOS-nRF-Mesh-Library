@@ -35,7 +35,7 @@ public class Model: Codable {
     /// identifier. In the latter case, the first 4 bytes correspond to
     /// a Bluetooth-assigned Company Identifier, and the 4 least significant
     /// bytes a vendor-assigned model identifier.
-    internal let modelId: UInt32
+    public let modelId: UInt32
     /// Bluetooth SIG or vendor-assigned model identifier.
     public var modelIdentifier: UInt16 {
         return UInt16(modelId & 0x0000FFFF)
