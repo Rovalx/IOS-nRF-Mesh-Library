@@ -187,6 +187,7 @@ public extension UInt16 {
     
     static let lightLightnessClientModelId: UInt16 = 0x1302
     static let lightHslClientModelId: UInt16 = 0x1309
+    static let lightCtlClientModelId: UInt16 = 0x1305
     
     static let genericDefaultTransitionTimeServerModelid: UInt16 = 0x1004
     static let genericDefaultTransitionTimeClientModelid: UInt16 = 0x1005

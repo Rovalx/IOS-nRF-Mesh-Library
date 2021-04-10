@@ -32,7 +32,7 @@
   * Created by codepgq.
   */
 
-import Foundation
+import UIKit
 
 public struct LightCTLSetUnacknowledged: GenericMessage, TransactionMessage, TransitionMessage {
     public static let opCode: UInt32 = 0x825F
@@ -59,6 +59,14 @@ public struct LightCTLSetUnacknowledged: GenericMessage, TransactionMessage, Tra
     
     public var transitionTime: TransitionTime?
     public var delay: UInt8?
+    
+    public init(lightness: CGFloat, temperature: CGFloat, deltaUV: CGFloat) {
+        self.init(
+            lightness: UInt16(lightness * 0xFFFF),
+            temperature: 0x0320 + UInt16(temperature * (0x4E20 - 0x0320)),
+            deltaUV: Int16(deltaUV * 0xFFFF / 100 - 0x8000)
+        )
+    }
     
     /// Creates the Light CTL Set Unacknowledged message.
     ///

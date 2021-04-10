@@ -59,6 +59,13 @@ public struct LightCTLTemperatureSet: AcknowledgedGenericMessage, TransactionMes
     public var transitionTime: TransitionTime?
     public var delay: UInt8?
     
+    public init(scaledTemperature temperature: Int) {
+        self.init(
+            temperature: 0x0320 + UInt16(Float(temperature / 100) * (0x4E20 - 0x0320)),
+            deltaUV: 0
+        )
+    }
+    
     /// Creates the Light CTL Temperature Set message.
     ///
     /// The temperature parameter is color temperature of white light in Kelvin.

@@ -53,6 +53,11 @@ public struct LightCTLTemperatureStatus: GenericMessage, TransitionStatusMessage
     /// The target value of the Light CTL Delta UV state.
     public let targetDeltaUV: Int16?
     
+    /// Returns `temperature` value in range of <0, 1>
+    public var scaledTemperature: Int {
+        return Int(Float(temperature - 0x0320) / Float(0x4E20 - 0x0320) * 100)
+    }
+    
     public let remainingTime: TransitionTime?
     
     /// Creates the Light CTL Temperature Status message.

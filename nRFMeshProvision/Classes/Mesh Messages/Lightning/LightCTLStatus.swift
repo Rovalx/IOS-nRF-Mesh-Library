@@ -32,7 +32,7 @@
   * Created by codepgq.
   */
 
-import Foundation
+import UIKit
 
 public struct LightCTLStatus: GenericMessage, TransitionStatusMessage {
     public static var opCode: UInt32 = 0x8260
@@ -56,6 +56,16 @@ public struct LightCTLStatus: GenericMessage, TransitionStatusMessage {
     public let targetLightness: UInt16?
     /// The target value of the Light CTL Temperature state.
     public let targetTemperature: UInt16?
+    
+    /// Returns `lightness` value in range of <0, 1>
+    public var scaledLightness: CGFloat {
+        return CGFloat(lightness) / 0xFFFF
+    }
+    
+    /// Returns `temperature` value in range of <0, 1>
+    public var scaledTemperature: CGFloat {
+        return CGFloat(temperature - 0x0320) / CGFloat(0x4E20 - 0x0320)
+    }
     
     public let remainingTime: TransitionTime?
     
