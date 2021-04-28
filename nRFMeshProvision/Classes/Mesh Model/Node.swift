@@ -65,6 +65,9 @@ public class Node: Codable {
         public let interval: UInt16
         /// Number of 10-millisecond steps between transmissions.
         public var steps: UInt8 {
+            if interval <= 9 {
+                return 0
+            }
             return UInt8(interval / 10) - 1
         }
         /// The interval in as `TimeInterval` in seconds.

@@ -577,7 +577,12 @@ private extension AccessLayer {
         let initialDelay: TimeInterval =
             networkManager.acknowledgmentMessageInterval(ttl, pdu.segmentsCount)
         /// The timeout before which the response should be received.
-        let timeout = networkManager.acknowledgmentMessageTimeout
+        let timeout: TimeInterval
+        if pdu.message is ConfigNodeReset {
+            timeout = 8
+        } else {
+            timeout = networkManager.acknowledgmentMessageTimeout
+        }
         
         let ack = AcknowledgmentContext(for: request,
             sentFrom: pdu.source, to: pdu.destination.address,
