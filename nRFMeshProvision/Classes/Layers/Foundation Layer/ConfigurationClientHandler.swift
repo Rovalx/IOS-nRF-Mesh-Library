@@ -58,6 +58,7 @@ internal class ConfigurationClientHandler: ModelDelegate {
             ConfigBeaconStatus.self,
             ConfigNetworkTransmitStatus.self,
             ConfigNodeResetStatus.self,
+            ConfigNodeIdentityStatus.self,
             ConfigHeartbeatPublicationStatus.self,
             ConfigHeartbeatSubscriptionStatus.self
         ]

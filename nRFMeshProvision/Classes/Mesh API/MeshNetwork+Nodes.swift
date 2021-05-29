@@ -92,6 +92,31 @@ public extension MeshNetwork {
         }
     }
     
+    /// Retruns wheter given node matches given Hash and Random.
+    /// This is used to match the Node Identity beacon.
+    func matches(node: Node, hash: Data, random: Data) -> Bool {
+        let helper = OpenSSLHelper()
+        
+        // Data are: 48 bits of Padding (0s), 64 bit Random and Unicast Address.
+        let data = Data(repeating: 0, count: 6) + random + node.unicastAddress.bigEndian
+        
+        for networkKey in node.networkKeys {
+            let encryptedData = helper.calculateEvalue(with: data, andKey: networkKey.keys.identityKey)!
+            if encryptedData.dropFirst(8) == hash {
+                return true
+            }
+            // If the Key refresh procedure is in place, the identity might have been
+            // generated with the old key.
+            if let oldIdentityKey = networkKey.oldKeys?.identityKey {
+                let encryptedData = helper.calculateEvalue(with: data, andKey: oldIdentityKey)!
+                if encryptedData.dropFirst(8) == hash {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
     /// Returns whether any of the Nodes in the mesh network matches
     /// given Hash and Random. This is used to match the Node Identity beacon.
     ///
@@ -100,25 +125,9 @@ public extension MeshNetwork {
     /// - returns: `True` if the given parameters match any node of this
     ///            mesh network.
     func matches(hash: Data, random: Data) -> Bool {
-        let helper = OpenSSLHelper()
-        
         for node in nodes {
-            // Data are: 48 bits of Padding (0s), 64 bit Random and Unicast Address.
-            let data = Data(repeating: 0, count: 6) + random + node.unicastAddress.bigEndian
-            
-            for networkKey in node.networkKeys {
-                let encryptedData = helper.calculateEvalue(with: data, andKey: networkKey.keys.identityKey)!
-                if encryptedData.dropFirst(8) == hash {
-                    return true
-                }
-                // If the Key refresh procedure is in place, the identity might have been
-                // generated with the old key.
-                if let oldIdentityKey = networkKey.oldKeys?.identityKey {
-                    let encryptedData = helper.calculateEvalue(with: data, andKey: oldIdentityKey)!
-                    if encryptedData.dropFirst(8) == hash {
-                        return true
-                    }
-                }
+            if matches(node: node, hash: hash, random: random) {
+                return true
             }
         }
         return false
