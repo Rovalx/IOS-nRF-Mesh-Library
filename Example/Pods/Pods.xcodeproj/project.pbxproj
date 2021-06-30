@@ -103,6 +103,8 @@
 		353DC922F00812175FE39BCB4F497949 /* LightHSLTargetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12045479F74544041FA3CA2F30CA80B2 /* LightHSLTargetStatus.swift */; };
 		36A8656F25BC7549002DBD63 /* HealthAttentionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A8656E25BC7549002DBD63 /* HealthAttentionSet.swift */; };
 		36BEB0E77A06EB4356CF41059EAA74F1 /* LightLightnessRangeGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690647A8327F3756BA53019B3EB3C12 /* LightLightnessRangeGet.swift */; };
+		36D9985D268CD8AF00684769 /* ConfigNodeIdentitySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D9985B268CD8AF00684769 /* ConfigNodeIdentitySet.swift */; };
+		36D9985E268CD8AF00684769 /* ConfigNodeIdentityStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D9985C268CD8AF00684769 /* ConfigNodeIdentityStatus.swift */; };
 		36E5BC2CC42B6C686F409EFF46555F80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		371AD05EC286AA0614E5FB1BFCC80A05 /* ConfigNetworkTransmitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C616047ED678DA44EEE3CEA2888859 /* ConfigNetworkTransmitSet.swift */; };
 		374705F372AC0E7EE7E38473283778D5 /* GattBearerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF8A6A3436D61C4695468AC100A4221 /* GattBearerDelegate.swift */; };
@@ -476,6 +478,8 @@
 		365DB2FD709DBE3B85E9D0C4F4655998 /* rand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rand.h; path = ios/include/openssl/rand.h; sourceTree = "<group>"; };
 		36917E6A31C54EAF6E3F0D5CCAC86693 /* Element+Address.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Element+Address.swift"; sourceTree = "<group>"; };
 		36A8656E25BC7549002DBD63 /* HealthAttentionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthAttentionSet.swift; sourceTree = "<group>"; };
+		36D9985B268CD8AF00684769 /* ConfigNodeIdentitySet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigNodeIdentitySet.swift; sourceTree = "<group>"; };
+		36D9985C268CD8AF00684769 /* ConfigNodeIdentityStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigNodeIdentityStatus.swift; sourceTree = "<group>"; };
 		37EC3959BB5B469DDCDA0A082014E1F5 /* LightLightnessGet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LightLightnessGet.swift; sourceTree = "<group>"; };
 		38E44CFDD30E8196AB182620090077A7 /* asn1t.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1t.h; path = ios/include/openssl/asn1t.h; sourceTree = "<group>"; };
 		39D5550D1FE961D228BF66813367C2ED /* opensslconf-x86_64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "opensslconf-x86_64.h"; path = "ios/include/openssl/opensslconf-x86_64.h"; sourceTree = "<group>"; };
@@ -987,6 +991,8 @@
 				A2C616047ED678DA44EEE3CEA2888859 /* ConfigNetworkTransmitSet.swift */,
 				11CAB0C647173EEB60E98E0B0CDD4A60 /* ConfigNetworkTransmitStatus.swift */,
 				92A0339B9D22018F3EAAF40708E9C86B /* ConfigNodeReset.swift */,
+				36D9985B268CD8AF00684769 /* ConfigNodeIdentitySet.swift */,
+				36D9985C268CD8AF00684769 /* ConfigNodeIdentityStatus.swift */,
 				B12068F54B27B191B1F5F4ADA0145EE5 /* ConfigNodeResetStatus.swift */,
 				E9A23B5651B26F62AE1AF1EB8FB93534 /* ConfigRelayGet.swift */,
 				B3D3F336EC35DE66420FEB21AFBC9FD9 /* ConfigRelaySet.swift */,
@@ -1752,6 +1758,7 @@
 				BD1B0DF4E9535ABA3CBC108C313AC123 /* BearerDelegate.swift in Sources */,
 				56423228136609357F0373BE341534C4 /* BearerError.swift in Sources */,
 				55B427E3260EE969B6ACF8CE44B0BCA6 /* ClosedRange.swift in Sources */,
+				36D9985E268CD8AF00684769 /* ConfigNodeIdentityStatus.swift in Sources */,
 				8AB51751AF9447023AE6E44B6BC29E9D /* CompanyIdentifier.swift in Sources */,
 				0D18B78F9701772B7DA3C3CFC9AD7DB0 /* CompositionElement.swift in Sources */,
 				698EEF33FEF0486E5338EAACCC465DD4 /* ConfigAppKeyAdd.swift in Sources */,
@@ -1764,6 +1771,7 @@
 				09325ED146078658AC421FC3594FBE16 /* ConfigBeaconSet.swift in Sources */,
 				6B596DF4BA6447E9F42ED61D108B6F12 /* ConfigBeaconStatus.swift in Sources */,
 				022AE41FCFE3923A0EB75627DDA58F85 /* ConfigCompositionDataGet.swift in Sources */,
+				36D9985D268CD8AF00684769 /* ConfigNodeIdentitySet.swift in Sources */,
 				EEF069C3A5BC3E642059CE4CA2CA128E /* ConfigCompositionDataStatus.swift in Sources */,
 				46D6A8A2B68BFA131FBD6A5EE7927B6E /* ConfigDefaultTtlGet.swift in Sources */,
 				FF6DEDA2A5DE238EADB4FF40816731DA /* ConfigDefaultTtlSet.swift in Sources */,
